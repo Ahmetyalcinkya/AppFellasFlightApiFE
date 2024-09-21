@@ -1,8 +1,11 @@
+import FlightInformation from "../compounds/FlightInformation";
+import { SideBar } from "../compounds/SideBar";
 
 function HomePage() {
     return (
-        <div>
-            <p>HomePage</p>
+        <div className="flex flex-row justify-around items-center w-full h-full pt-6">
+            <FlightInformation />
+            <SideBar />
         </div>
     )
 };
