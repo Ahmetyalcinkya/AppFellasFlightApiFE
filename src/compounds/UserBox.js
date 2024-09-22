@@ -6,7 +6,7 @@ export const UserBox = () => {
     const isLoggedIn = true;
 
     return (
-        <div className="flex items-center justify-center gap-x-5 px-4">
+        <div className="flex items-center justify-center gap-x-5">
             <div className="bg-brand h-8 rounded-full flex items-center justify-center px-4 cursor-pointer">
                 {isLoggedIn ? (
                     <div className="flex items-center justify-center gap-x-2">

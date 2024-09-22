@@ -8,7 +8,7 @@ import Footer from "./components/Footer";
 
 function App() {
   return (
-    <div className="w-full min-h-screen bg-headerBackground h-full justify-between px-10 items-center flex flex-col">
+    <div className="w-full min-h-screen bg-headerBackground h-full justify-between px-20 items-center flex flex-col">
       <Header />
       <Switch>
         <Route exact path="/">

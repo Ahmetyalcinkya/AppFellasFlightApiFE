@@ -3,7 +3,7 @@ import { SideBar } from "../compounds/SideBar";
 
 function HomePage() {
     return (
-        <div className="flex flex-row justify-around items-center w-full h-full pt-6">
+        <div className="flex flex-row justify-between items-start w-full h-full pt-6">
             <FlightInformation />
             <SideBar />
         </div>

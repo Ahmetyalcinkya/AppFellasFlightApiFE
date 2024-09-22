@@ -14,7 +14,7 @@ export const SearchFlightBoxFilter = () => {
     
     return (
         <div>
-            <div className="flex flex-row items-center justify-around py-6 px-4 gap-x-4">
+            <div className="flex flex-row items-center justify-between py-6 px-6 gap-x-4">
                 <div className="flex gap-x-2 h-10">
                     <div className="border-brand rounded-l-full border-2 otuline-none overflow-hidden flex flex-row items-center px-4 py-1">
                         <FontAwesomeIcon icon={faPlaneDeparture} size="lg" color={BRAND} />
