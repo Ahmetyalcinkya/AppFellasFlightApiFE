@@ -1,55 +1,84 @@
 import { faCalendarPlus, faPlaneArrival, faPlaneDeparture } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useDispatch, useSelector } from "react-redux";
 import { BRAND } from "../environment/environment";
+import { fetchAllAirports } from "../redux/features/thunk/fetchAirports";
+import { ArrivalAirportDropdown } from "./ArrivalAirportDropdown";
+import { DepartureAirportDropdown } from "./DepartureAirportDropdown";
 
 export const SearchFlightBoxFilter = () => {
 
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
+    const [date, setDate] = useState({
+        startDate: null,
+        endDate: null
+    });
+    const [departure, setDeparture] = useState({
+        departureAirportIATA: null,
+    })
 
-    // SEND DATE AIRLINE INFORMATION TO THE BACKEND ! 
+    const [arrival, setArrival] = useState({
+        arrivalAirportIATA: null
+    })
+    const dispatch = useDispatch();
+    const { airports } = useSelector((state) => state.airport);
+
+    const handleDeparture = (data) => {
+        setDeparture({
+            departureAirportIATA: data
+        })
+    }
+
+    const handleArrival = (data) => {
+        setArrival({
+            arrivalAirportIATA: data
+        })
+    }
+
+    const sendFilters = () => {
+        const data = {
+            departureIATACode: departure.departureAirportIATA,
+            arrivalIATACode: arrival.arrivalAirportIATA,
+            startDate: date.startDate,
+            endDate: date.endDate
+        }
+        // Dispatch filterFlights(data)
+    }
+
+    useEffect(() => {
+        dispatch(fetchAllAirports());
+    }, [])
     
     return (
         <div>
-            <div className="flex flex-row items-center justify-between py-6 px-6 gap-x-4">
-                <div className="flex gap-x-2 h-10">
-                    <div className="border-brand rounded-l-full border-2 otuline-none overflow-hidden flex flex-row items-center px-4 py-1">
+            <div className="w-full flex flex-row items-center justify-between py-6 px-6 gap-x-4">
+                <div className="w-1/2 flex-1 flex gap-x-2 h-10">
+                    <div className="w-1/2 border-brand rounded-l-full border-2 otuline-none overflow-hidden flex flex-row items-center gap-x-2 px-4 py-1">
                         <FontAwesomeIcon icon={faPlaneDeparture} size="lg" color={BRAND} />
-                        {/* AIRLINE LIST DROPDOWN */}
-                        <DatePicker
-                            className="p-2 w-full h-10 text-base outline-none focus:outline-none"
-                            selected={startDate}
-                            onChange={(date) => setStartDate(date)}
-                        />
+                        <DepartureAirportDropdown airports={airports} handleDeparture={handleDeparture} />
                     </div>
-                    <div className="border-brand rounded-r-full border-2 otuline-none overflow-hidden flex flex-row items-center px-4 py-1">
+                    <div className="w-1/2 border-brand rounded-r-full border-2 otuline-none overflow-hidden flex flex-row items-center px-4 py-1">
                         <FontAwesomeIcon icon={faPlaneArrival} size="lg" color={BRAND} />
-                        {/* AIRLINE LIST DROPDOWN */}
-                        <DatePicker
-                            className="p-2 w-full h-10 text-base outline-none focus:outline-none"
-                            selected={endDate}
-                            onChange={(date) => setEndDate(date)}
-                        />
+                        <ArrivalAirportDropdown airports={airports} handleArrival={handleArrival} />
                     </div>
                 </div>
-                <div className="flex gap-x-2 h-10">
+                <div className="w-1/2 flex-1 flex gap-x-2 h-10">
                     <div className="border-brand rounded-l-full border-2 otuline-none overflow-hidden flex flex-row items-center px-4 py-1">
                         <FontAwesomeIcon icon={faCalendarPlus} size="lg" color={BRAND} />
                         <DatePicker
                             className="p-2 w-full h-10 text-base outline-none focus:outline-none"
-                            selected={startDate}
-                            onChange={(date) => setStartDate(date)}
+                            selected={date.startDate}
+                            onChange={(value) => setDate(date.startDate = value)}
                         />
                     </div>
                     <div className="border-brand rounded-r-full border-2 otuline-none overflow-hidden flex flex-row items-center px-4 py-1">
                         <FontAwesomeIcon icon={faCalendarPlus} size="lg" color={BRAND} />
                         <DatePicker
                             className="p-2 w-full h-10 text-base outline-none focus:outline-none"
-                            selected={endDate}
-                            onChange={(date) => setEndDate(date)}
+                            selected={date.endDate}
+                            onChange={(value) => setDate(date.endDate = value)}
                         />
                     </div>
                 </div>

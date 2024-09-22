@@ -2,7 +2,7 @@ import { faCheck, faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react'
 import clsx from 'clsx'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { BRAND } from '../environment/environment'
 
 const sort = [
@@ -11,8 +11,14 @@ const sort = [
   { id: 3, name: 'Lowest' },
 ]
 
-export const SortByDropdown = () => {
+export const SortByDropdown = ({handleSort}) => {
   const [selected, setSelected] = useState(sort[0])
+  
+  useEffect(() => {
+    if(selected.id === 1) handleSort(null)
+    if(selected.id === 2) handleSort("D")
+    if(selected.id === 3) handleSort("A")
+  }, [selected])
 
   return (
     <div className="w-full py-4">
