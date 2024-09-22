@@ -1,13 +1,14 @@
 import { AxiosWithAuth } from "../../../utils/AxiosWithAuth";
 import { fetchStates } from "../../../utils/fetchStates";
-import { changeFetchState, setAirports } from "../airport/airportSlice";
+import { changeFetchState, setUsersFlights } from "../flight/flightSlice";
 
-export const fetchAllAirports = () => (dispatch) => {
+export const fetchUsersFlights = () => (dispatch) => {
     dispatch(changeFetchState(fetchStates.FETCHING));
     AxiosWithAuth()
-        .get("airport/all")
+        .get("flight/users-flights") // Users flight not fetched due to id issue. Fix this;
         .then((response) => {
-            dispatch(setAirports(response.data))
+            console.log(response.data)
+            // dispatch(setUsersFlights(response.data))
             dispatch(changeFetchState(fetchStates.FETCHED));
         })
         .catch((error) => {

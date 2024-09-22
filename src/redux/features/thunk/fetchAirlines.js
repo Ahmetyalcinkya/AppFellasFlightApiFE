@@ -3,7 +3,7 @@ import { fetchStates } from "../../../utils/fetchStates";
 import { changeFetchState, setAirlines } from "../airline/airlineSlice";
 
 export const fetchAllAirlines = () => (dispatch) => {
-    dispatch(changeFetchState(fetchStates.FETHING));
+    dispatch(changeFetchState(fetchStates.FETCHING));
     AxiosWithAuth()
         .get("airline/all")
         .then((response) => {

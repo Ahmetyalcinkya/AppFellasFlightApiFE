@@ -1,13 +1,13 @@
 import { AxiosWithAuth } from "../../../utils/AxiosWithAuth";
 import { fetchStates } from "../../../utils/fetchStates";
-import { changeFetchState, setAirports } from "../airport/airportSlice";
+import { changeFetchState, setUser } from "../user/userSlice";
 
-export const fetchAllAirports = () => (dispatch) => {
+export const logout = () => (dispatch) => {
     dispatch(changeFetchState(fetchStates.FETCHING));
     AxiosWithAuth()
-        .get("airport/all")
-        .then((response) => {
-            dispatch(setAirports(response.data))
+        .post("auth/logout")
+        .then(() => {
+            dispatch(setUser(null))
             dispatch(changeFetchState(fetchStates.FETCHED));
         })
         .catch((error) => {
