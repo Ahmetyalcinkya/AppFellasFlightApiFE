@@ -5,14 +5,17 @@ import { FlightInformationCard } from "./FlightInformationCard";
 import { SearchFlightBox } from "./SearchFlightBox";
 import { SortByDropdown } from "./SortByDropdown";
 import { StopsRadioGroup } from "./StopsRadioGroup";
+import { useDispatch } from "react-redux";
+import { fetchFilteredFlightsByAirline } from "../redux/features/thunk/fetchFilteredFlightsByAirline";
 
 function FlightInformation() {
-    const [airline, setAirline] = useState(null);
-    const [sort, setSort] = useState(null);
+    const [airline, setAirline] = useState("");
+    const [sort, setSort] = useState("");
     const [time, setTime] = useState({
-        startTime: null,
-        endTime: null
+        startTime: "",
+        endTime: ""
     });
+    const dispatch = useDispatch();
 
     const handleSort = (data) => {
         setSort(data);
@@ -37,7 +40,7 @@ function FlightInformation() {
             property: "PRICE",
             direction: sort
         }
-        // Dispatch filterFlights(data)
+        dispatch(fetchFilteredFlightsByAirline(data));
     }
 
     return (
@@ -65,7 +68,7 @@ function FlightInformation() {
                         <AirlineRadioGroup handleAirline={handleAirline} />
                     </div>
                     <div className="flex justify-center items-center my-4">
-                        <button onClick={() => {}} className="bg-brand text-white font-bold text-lg px-4 py-2 rounded-lg">Filter</button>
+                        <button onClick={sendFilters} className="bg-brand text-white font-bold text-lg px-4 py-2 rounded-lg">Filter</button>
                     </div>
                 </div> 
             </div>

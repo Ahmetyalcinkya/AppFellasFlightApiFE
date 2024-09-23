@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react'
 import { BRAND } from '../environment/environment'
 
 const sort = [
-  { id: 1, name: 'Default' },
   { id: 2, name: 'Highest' },
   { id: 3, name: 'Lowest' },
 ]
@@ -15,9 +14,8 @@ export const SortByDropdown = ({handleSort}) => {
   const [selected, setSelected] = useState(sort[0])
   
   useEffect(() => {
-    if(selected.id === 1) handleSort(null)
-    if(selected.id === 2) handleSort("D")
-    if(selected.id === 3) handleSort("A")
+    if(selected.id === 2) handleSort("DESC")
+    if(selected.id === 3) handleSort("ASC")
   }, [selected])
 
   return (

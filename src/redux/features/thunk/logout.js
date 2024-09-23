@@ -8,6 +8,7 @@ export const logout = () => (dispatch) => {
         .post("auth/logout")
         .then(() => {
             dispatch(setUser(null))
+            localStorage.removeItem("token");
             dispatch(changeFetchState(fetchStates.FETCHED));
         })
         .catch((error) => {

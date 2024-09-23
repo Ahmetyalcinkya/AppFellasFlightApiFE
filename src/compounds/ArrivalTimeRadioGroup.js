@@ -2,8 +2,8 @@ import { Radio, RadioGroup } from '@headlessui/react';
 import { useEffect, useState } from 'react';
 
 const plans = [
-  { id:1, name: '5:00 AM - 11:59 AM'},
-  { id:2, name: '12:00 PM - 5:59 PM'},
+  { id:1, name: '00:00 AM - 11:59 AM'},
+  { id:2, name: '12:00 PM - 23:59 PM'},
 ]
 
 export const ArrivalTimeRadioGroup = ({handleTime}) => {
@@ -12,12 +12,12 @@ export const ArrivalTimeRadioGroup = ({handleTime}) => {
     useEffect(() => {
         if(selected) {
             if(selected.id === 1) handleTime({
-                startTime: "5:00",
-                endTime: "11.59"
+                startTime: "00:00",
+                endTime: "11:59"
             })
             if(selected.id === 2) handleTime({
                 startTime: "12:00",
-                endTime: "5.59"
+                endTime: "23:59"
             })
         }
     }, [selected])

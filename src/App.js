@@ -1,23 +1,12 @@
-import { Switch } from "react-router-dom";
-import { Route } from "react-router-dom";
-import HomePage from "./pages/HomePage";
-import FlightsPage from "./pages/FlightsPage";
-import LoginPage from "./pages/LoginPage";
-import Header from "./components/Header";
+import { Route, Switch } from "react-router-dom";
 import Footer from "./components/Footer";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { fetchUsersFlights } from "./redux/features/thunk/fetchUsersFlights";
+import Header from "./components/Header";
+import FlightsPage from "./pages/FlightsPage";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    setTimeout(() => {
-      dispatch(fetchUsersFlights());
-    }, 2000);
-  }, [])
+  
   return (
     <div className="w-full min-h-screen bg-headerBackground h-full justify-between px-20 items-center flex flex-col">
       <Header />

@@ -1,13 +1,13 @@
 import { AxiosWithAuth } from "../../../utils/AxiosWithAuth";
 import { fetchStates } from "../../../utils/fetchStates";
-import { changeFetchState, setUsersFlights } from "../flight/flightSlice";
+import { changeFetchState, setFlights } from "../flight/flightSlice";
 
-export const fetchUsersFlights = () => (dispatch) => {
+export const fetchFilteredFlightsByAirline = (data) => (dispatch) => { // AIRLINE ""
     dispatch(changeFetchState(fetchStates.FETCHING));
     AxiosWithAuth()
-        .get("flight/users-flights")
+        .get(`flight/filter-flights?startDate=&endDate=&startTime=${data.startTime}&endTime=${data.endTime}&airline=${data.airline}&property=DATE&direction=${data.direction}&departureAirportIATA=&arrivalAirportIATA=`)
         .then((response) => {
-            dispatch(setUsersFlights(response.data))
+            dispatch(setFlights(response.data))
             dispatch(changeFetchState(fetchStates.FETCHED));
         })
         .catch((error) => {

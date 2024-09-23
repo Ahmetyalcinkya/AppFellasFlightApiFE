@@ -6,22 +6,21 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
 import { BRAND } from "../environment/environment";
 import { fetchAllAirports } from "../redux/features/thunk/fetchAirports";
+import { fetchFilteredFlightsByAirport } from "../redux/features/thunk/fetchFilteredFlights";
 import { ArrivalAirportDropdown } from "./ArrivalAirportDropdown";
 import { DepartureAirportDropdown } from "./DepartureAirportDropdown";
 
 export const SearchFlightBoxFilter = () => {
 
-    const [date, setDate] = useState({
-        startDate: null,
-        endDate: null
-    });
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
     const [departure, setDeparture] = useState({
         departureAirportIATA: null,
     })
-
     const [arrival, setArrival] = useState({
         arrivalAirportIATA: null
     })
+
     const dispatch = useDispatch();
     const { airports } = useSelector((state) => state.airport);
 
@@ -41,10 +40,10 @@ export const SearchFlightBoxFilter = () => {
         const data = {
             departureIATACode: departure.departureAirportIATA,
             arrivalIATACode: arrival.arrivalAirportIATA,
-            startDate: date.startDate,
-            endDate: date.endDate
+            startDate: startDate?.toLocaleDateString('en-ZA').replace(/\//g, '-'),
+            endDate: endDate?.toLocaleDateString('en-ZA').replace(/\//g, '-')
         }
-        // Dispatch filterFlights(data)
+        dispatch(fetchFilteredFlightsByAirport(data));
     }
 
     useEffect(() => {
@@ -69,23 +68,23 @@ export const SearchFlightBoxFilter = () => {
                         <FontAwesomeIcon icon={faCalendarPlus} size="lg" color={BRAND} />
                         <DatePicker
                             className="p-2 w-full h-10 text-base outline-none focus:outline-none"
-                            selected={date.startDate}
-                            onChange={(value) => setDate(date.startDate = value)}
+                            selected={startDate}
+                            onChange={(value) => setStartDate(value)}
                         />
                     </div>
                     <div className="border-brand rounded-r-full border-2 otuline-none overflow-hidden flex flex-row items-center px-4 py-1">
                         <FontAwesomeIcon icon={faCalendarPlus} size="lg" color={BRAND} />
                         <DatePicker
                             className="p-2 w-full h-10 text-base outline-none focus:outline-none"
-                            selected={date.endDate}
-                            onChange={(value) => setDate(date.endDate = value)}
+                            selected={endDate}
+                            onChange={(value) => setEndDate(value)}
                         />
                     </div>
                 </div>
                 
             </div>
             <div className="px-4 pb-8">
-                <button onClick={() => {}} className="bg-brand border border-brand rounded-lg flex items-center justify-center text-white text-xl px-3 py-3 w-40 font-semibold hover:bg-white hover:text-brand duration-300 transition-colors hover:border">
+                <button onClick={sendFilters} className="bg-brand border border-brand rounded-lg flex items-center justify-center text-white text-xl px-3 py-3 w-40 font-semibold hover:bg-white hover:text-brand duration-300 transition-colors hover:border">
                     Show Flights
                 </button>
             </div>

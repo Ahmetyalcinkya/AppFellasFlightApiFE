@@ -4,7 +4,7 @@ export const AxiosWithAuth = () => {
   const token = localStorage.getItem("token");
   return axios.create({
     baseURL: "http://localhost:8080/AppFellas/api/v1/",
-    headers: token ? { authorization: token } : {},
+    headers: token ? { authorization: `Bearer ${token}` } : {},
   });
 };
 
