@@ -7,6 +7,7 @@ import LoginPage from "./pages/LoginPage";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchLoggedInUser } from "./redux/features/thunk/fetchLoggedInUser";
+import ProtectedPage from "./pages/ProtectedPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -23,8 +24,8 @@ function App() {
           <HomePage />
         </Route>
         <Route exact path="/my-flights">
-          <FlightsPage />
-        </Route>
+            <ProtectedPage PageComponent={FlightsPage} fromURL={"/login"} />
+          </Route>
         <Route exact path="/login">
         <LoginPage />
         </Route>

@@ -68,7 +68,7 @@ function FlightInformation() {
                         <AirlineRadioGroup handleAirline={handleAirline} />
                     </div>
                     <div className="flex justify-center items-center my-4">
-                        <button onClick={sendFilters} className="bg-brand text-white font-bold text-lg px-4 py-2 rounded-lg">Filter</button>
+                        <button onClick={sendFilters} className="bg-brand text-white font-bold text-lg px-4 py-2 rounded-lg">Show Flights</button>
                     </div>
                 </div> 
             </div>

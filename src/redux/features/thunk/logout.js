@@ -7,9 +7,10 @@ export const logout = () => (dispatch) => {
     AxiosWithAuth()
         .post("auth/logout")
         .then(() => {
-            dispatch(setUser(null))
+            dispatch(setUser({}))
             localStorage.removeItem("token");
-            dispatch(changeFetchState(fetchStates.FETCHED));
+            dispatch(changeFetchState(fetchStates.NOT_FETCHED));
+            window.location.reload();
         })
         .catch((error) => {
             console.log(error);

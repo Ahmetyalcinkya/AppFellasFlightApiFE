@@ -4,7 +4,7 @@ import { BRAND } from "../environment/environment";
 
 export const HeaderBox = () => {
     return (
-        <div className="flex items-center justify-center gap-x-10">
+        <div className="flex items-center justify-center gap-x-6 px-6">
             <button className="flex flex-row items-center gap-x-2">
                 <FontAwesomeIcon icon={faTag} size="lg" color={BRAND} />
                 <h3 className="text-lg font-semibold text-black">
@@ -15,7 +15,7 @@ export const HeaderBox = () => {
             <button className="flex flex-row items-center gap-x-2">
                 <FontAwesomeIcon icon={faEarthAmericas} size="lg" color={BRAND} />
                 <h3 className="text-lg font-semibold text-black">
-                    Deals
+                    Discover
                 </h3>
             </button>
         </div>
