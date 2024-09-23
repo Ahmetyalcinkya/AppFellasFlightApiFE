@@ -13,7 +13,7 @@ export const fetchLoggedInUser = () => (dispatch) => {
         })
         .catch((error) => {
             console.log(error);
-            if(error?.response?.data?.status === 401) {
+            if(error?.response?.data?.status === 401 || error?.response?.status === 400 ) {
                 localStorage.removeItem("token")
             }
             if(error.message === "Network Error"){

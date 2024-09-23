@@ -8,8 +8,6 @@ import { BRAND } from '../environment/environment'
 export const DepartureAirportDropdown = ({airports, handleDeparture}) => {
   const [selected, setSelected] = useState(null)
 
-  console.log(selected)
-
   useEffect(() => {
     if (selected) {
       handleDeparture(selected.iatacode);

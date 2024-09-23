@@ -25,7 +25,7 @@ export const SideBar = () => {
 
     return (
         <div className="flex flex-col gap-y-8 items-end justify-center w-96">
-            {cardInfo.map((card) => (<Card image={card.image} icon={card.icon} text={card.text} />))}
+            {cardInfo.map((card, index) => (<Card key={index} image={card.image} icon={card.icon} text={card.text} />))}
         </div>
     )
 };

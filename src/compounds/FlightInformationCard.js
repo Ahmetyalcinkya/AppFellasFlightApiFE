@@ -4,11 +4,13 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { BRAND } from "../environment/environment";
 import { fetchAllFlights } from "../redux/features/thunk/fetchFlights";
+import { AxiosWithAuth } from "../utils/AxiosWithAuth";
 
 export const FlightInformationCard = () => {
 
     const dispatch = useDispatch();
     const {flights} = useSelector((state) => state.flight)
+    const {user} = useSelector((state) => state.user);
 
     const calculateArrivalTime = (departure, arrival) => {
         const [departureHour, departureMinutes] = departure.split(":").map(Number);
@@ -21,6 +23,20 @@ export const FlightInformationCard = () => {
         const diffMinutes = positiveDifferenceInMinutes % 60;
         return `${diffHours}h ${diffMinutes}m`
     }
+
+    const ids = [];
+    const addFlightToUser = (id) => {
+        AxiosWithAuth()
+            .put("user/update-flights", id, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }})
+            .then((response) => {
+                console.log(`Flight with the given id: ${id} added to user!`);
+                window.location.reload();
+            })
+            .catch((error) => console.log(error))
+    }
     
     useEffect(() => {
         flights.length === 0 && dispatch(fetchAllFlights());
@@ -28,8 +44,8 @@ export const FlightInformationCard = () => {
 
     return (
         <>
-           {flights.map((flight) => (
-                <div>
+           {flights.map((flight, index) => (
+                <div key={index}>
                     <div className="flex flex-col justify-around items-center bg-white w-full rounded-2xl rounded-bl-none overflow-hidden">
                         <h4 className="text-black font-bold text-lg w-full px-6 pt-6">
                             {flight.flightName}
@@ -49,7 +65,7 @@ export const FlightInformationCard = () => {
                             <div className="w-full min-w-36 flex flex-col gap-y-2 justify-center items-center">
                                 <span>{flight.airlineName}</span>
                                 <FontAwesomeIcon icon={faPlane} size="2xl" color={BRAND} />
-                                <span>{calculateArrivalTime(flight.scheduleTime.slice(0, 5), flight.estimatedLandingTime.slice(11, 16))} (NonStop)</span>
+                                <span>{calculateArrivalTime(flight.scheduleTime.slice(0, 5), flight.actualLandingTime.slice(11, 16))} (NonStop)</span>
                             </div>
                             <hr className="w-full border-2 mx-10"/>
 
@@ -69,7 +85,10 @@ export const FlightInformationCard = () => {
                                 <span className="text-brand font-bold text-xl">Price: ${flight.price}</span>
                                 <span className="text-sm font-medium">Round Trip</span>
                             </div>
-                            <button onClick={() => {}} className="flex flex-col items-start justify-center gap-y-1 bg-brand h-full px-6 rounded-tl-xl">
+                            <button disabled={flight.passengerIds.includes(user.id)} onClick={() => {
+                                ids.push(flight.id);
+                                addFlightToUser(ids);
+                            }} className={`flex flex-col items-start justify-center gap-y-1 ${flight.passengerIds.includes(user.id) ? "bg-gray-500" : "bg-brand"}  h-full px-6 rounded-tl-xl`}>
                                 <span className="text-white font-bold text-2xl">Book Flight</span>
                             </button>
                         </div>
