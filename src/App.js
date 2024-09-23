@@ -4,8 +4,16 @@ import Header from "./components/Header";
 import FlightsPage from "./pages/FlightsPage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { fetchLoggedInUser } from "./redux/features/thunk/fetchLoggedInUser";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchLoggedInUser());
+  }, [])
   
   return (
     <div className="w-full min-h-screen bg-headerBackground h-full justify-between px-20 items-center flex flex-col">
