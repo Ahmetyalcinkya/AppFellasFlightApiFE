@@ -13,15 +13,17 @@ export const FlightInformationCard = () => {
     const {user} = useSelector((state) => state.user);
 
     const calculateArrivalTime = (departure, arrival) => {
-        const [departureHour, departureMinutes] = departure.split(":").map(Number);
-        const [arrivalHour, arrivalMinutes] = arrival.split(":").map(Number);
-        const totalDepatureMinutes = departureHour * 60 + departureMinutes;
-        const totalArrivalMinutes = arrivalHour * 60 + arrivalMinutes;
-        const differenceInMinutes = totalArrivalMinutes - totalDepatureMinutes;
-        const positiveDifferenceInMinutes = Math.abs(differenceInMinutes);
-        const diffHours = Math.floor(positiveDifferenceInMinutes / 60);
-        const diffMinutes = positiveDifferenceInMinutes % 60;
-        return `${diffHours}h ${diffMinutes}m`
+        if(departure && arrival) {
+            const [departureHour, departureMinutes] = departure.split(":").map(Number);
+            const [arrivalHour, arrivalMinutes] = arrival.split(":").map(Number);
+            const totalDepatureMinutes = departureHour * 60 + departureMinutes;
+            const totalArrivalMinutes = arrivalHour * 60 + arrivalMinutes;
+            const differenceInMinutes = totalArrivalMinutes - totalDepatureMinutes;
+            const positiveDifferenceInMinutes = Math.abs(differenceInMinutes);
+            const diffHours = Math.floor(positiveDifferenceInMinutes / 60);
+            const diffMinutes = positiveDifferenceInMinutes % 60;
+            return `${diffHours}h ${diffMinutes}m`
+        }
     }
 
     const ids = [];
@@ -57,7 +59,7 @@ export const FlightInformationCard = () => {
                                     <span className="font-semibold">Departure</span>
                                 </div>
                                 <div className="flex flex-col justify-center items-start gap-x-2 py-1 w-40">
-                                    <span className="text-xl font-bold">{flight.scheduleTime.slice(0, 5)}</span>
+                                    <span className="text-xl font-bold">{flight.scheduleTime?.slice(0, 5)}</span>
                                     <span className="text-xl font-bold">Airport: {flight.route.departureIATACode}</span>
                                 </div>
                             </div>
@@ -65,7 +67,7 @@ export const FlightInformationCard = () => {
                             <div className="w-full min-w-36 flex flex-col gap-y-2 justify-center items-center">
                                 <span>{flight.airlineName}</span>
                                 <FontAwesomeIcon icon={faPlane} size="2xl" color={BRAND} />
-                                <span>{calculateArrivalTime(flight.scheduleTime.slice(0, 5), flight.actualLandingTime.slice(11, 16))} (NonStop)</span>
+                                <span>{calculateArrivalTime(flight.scheduleTime?.slice(0, 5), flight.actualLandingTime?.slice(11, 16))} (NonStop)</span>
                             </div>
                             <hr className="w-full border-2 mx-10"/>
 
@@ -75,7 +77,7 @@ export const FlightInformationCard = () => {
                                     <span className="font-semibold">Arrival</span>
                                 </div>
                                 <div className="flex flex-col justify-center items-start gap-x-2 py-1 w-40">
-                                    <span className="text-xl font-bold">{flight.estimatedLandingTime.slice(11, 16)}</span>
+                                    <span className="text-xl font-bold">{flight.estimatedLandingTime?.slice(11, 16)}</span>
                                     <span className="text-xl font-bold">Airport: {flight.route.arrivalIATACode}</span>
                                 </div>
                             </div>
